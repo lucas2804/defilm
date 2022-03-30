@@ -5,38 +5,37 @@
 
 get_header();
 ?>
+<h1>Git demo first</h1>
+  <section id="primary" class="content-area">
+    <main id="main" class="site-main">
 
-    <section id="primary" class="content-area">
-        <main id="main" class="site-main">
+        <?php
+        if (is_front_page() && !is_home()) {
+            dynamic_sidebar('homepage');
+        } else {
+            echo "<div class='container'>";
+            if (have_posts()) {
 
-			<?php
-			if ( is_front_page() && !is_home() ) {
-				dynamic_sidebar( 'homepage' );
-			} else {
-				echo "<div class='container'>";
-				if ( have_posts() ) {
+                // Load posts loop.
+                while (have_posts()) {
+                    the_post();
+                    get_template_part('template-parts/content/content');
+                }
 
-					// Load posts loop.
-					while ( have_posts() ) {
-						the_post();
-						get_template_part( 'template-parts/content/content' );
-					}
+                // Previous/next page navigation.
+                gloriafood_the_posts_navigation();
 
-					// Previous/next page navigation.
-					gloriafood_the_posts_navigation();
+            } else {
 
-				} else {
+                // If no content, include the "No posts found" template.
+                get_template_part('template-parts/content/content', 'none');
 
-					// If no content, include the "No posts found" template.
-					get_template_part( 'template-parts/content/content', 'none' );
+            }
+            echo '</div>';
+        }
+        ?>
 
-				}
-				echo '</div>';
-			}
-			?>
-
-        </main><!-- .site-main -->
-    </section><!-- .content-area -->
-
+    </main><!-- .site-main -->
+  </section><!-- .content-area -->
 <?php
 get_footer();
